@@ -4,9 +4,9 @@ from wrap_py import world, sprite
 world.create_world(600, 600)
 sprite.add_sprite("rocket_man", 300, 300, costume="rocket")
 world.set_world_background_color_rgb(180, 45, 255)
-num = sprite.add_sprite("X_X_pushka", 80, 600)
-sprite.set_bottom_to(num, 600)
-sprite.set_left_to(num, 0)
+pushka_UwU = sprite.add_sprite("X_X_pushka", 80, 600)
+sprite.set_bottom_to(pushka_UwU, 600)
+sprite.set_left_to(pushka_UwU, 0)
 ball = sprite.add_sprite("spring", 100, 100)
 scorost = 0
 
@@ -14,9 +14,9 @@ scorost = 0
 @wrap_py.on_key_down(wrap_py.K_RIGHT, wrap_py.K_LEFT)
 def dvijenie_pushki(key):
     if key == wrap_py.K_RIGHT:
-        sprite.move_sprite_by(num, 10, 0)
+        sprite.move_sprite_by(pushka_UwU, 10, 0)
     if key == wrap_py.K_LEFT:
-        sprite.move_sprite_by(num, -10, 0)
+        sprite.move_sprite_by(pushka_UwU, -10, 0)
 
 
 @wrap_py.always(50)
@@ -28,3 +28,15 @@ def beskonechnoe_dvijenie_karika():
     if niz >= 600:
         sprite.set_bottom_to(ball, 600)
         scorost = - scorost * 0.8
+
+
+@wrap_py.on_mouse_move
+def mouse_move(pos):
+    y = sprite.get_sprite_y(pushka_UwU)
+    sprite.move_sprite_to(pushka_UwU, pos[0], y)
+    left = sprite.get_left(pushka_UwU)
+    right = sprite.get_right(pushka_UwU)
+    if left <= 0:
+        sprite.set_left_to(pushka_UwU, 0)
+    if right >= 600:
+        sprite.set_right_to(pushka_UwU,600)
