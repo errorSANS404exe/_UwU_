@@ -9,14 +9,7 @@ sprite.set_bottom_to(pushka_UwU, 600)
 sprite.set_left_to(pushka_UwU, 0)
 ball = sprite.add_sprite("spring", 100, 100)
 scorost = 0
-
-
-@wrap_py.on_key_down(wrap_py.K_RIGHT, wrap_py.K_LEFT)
-def dvijenie_pushki(key):
-    if key == wrap_py.K_RIGHT:
-        sprite.move_sprite_by(pushka_UwU, 10, 0)
-    if key == wrap_py.K_LEFT:
-        sprite.move_sprite_by(pushka_UwU, -10, 0)
+bullet=None
 
 
 @wrap_py.always(50)
@@ -40,3 +33,19 @@ def mouse_move(pos):
         sprite.set_left_to(pushka_UwU, 0)
     if right >= 600:
         sprite.set_right_to(pushka_UwU,600)
+
+
+@wrap_py.on_mouse_down()
+def shooting():
+    global bullet
+    y=sprite.get_top(pushka_UwU)
+    x=sprite.get_sprite_x(pushka_UwU)
+    bullet=sprite.add_sprite("bullet",x,y)
+    sprite.set_bottom_to(bullet,y)
+
+
+@wrap_py.always
+def flight():
+    if bullet is not None:
+        x,y=sprite.get_sprite_pos(bullet)
+        sprite.move_sprite_to(bullet,x,y-5)
