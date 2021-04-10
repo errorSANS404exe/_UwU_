@@ -10,7 +10,7 @@ sprite.set_left_to(pushka_UwU, 0)
 ball = sprite.add_sprite("spring", 100, 100)
 scorost = 0
 bullet=None
-
+bullets=[]
 
 @wrap_py.always(50)
 def beskonechnoe_dvijenie_karika():
@@ -41,11 +41,15 @@ def shooting():
     y=sprite.get_top(pushka_UwU)
     x=sprite.get_sprite_x(pushka_UwU)
     bullet=sprite.add_sprite("bullet",x,y)
+    bullets.append(bullet)
     sprite.set_bottom_to(bullet,y)
 
 
 @wrap_py.always
 def flight():
-    if bullet is not None:
+    # if bullet is not None:
+    #     x,y=sprite.get_sprite_pos(bullet)
+    #     sprite.move_sprite_to(bullet,x,y-5)
+    for bullet in bullets:
         x,y=sprite.get_sprite_pos(bullet)
-        sprite.move_sprite_to(bullet,x,y-5)
+        sprite.move_sprite_to(bullet,x,y-20)
