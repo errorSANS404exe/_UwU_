@@ -9,18 +9,26 @@ sprite.set_bottom_to(pushka_UwU, 600)
 sprite.set_left_to(pushka_UwU, 0)
 ball = sprite.add_sprite("spring", 100, 100)
 scorost = 0
-bullet=None
-bullets=[]
+bullet = None
+bullets = []
+balls = []
+d = {"number": ball, "scorost": 0}
+
+balls.append(d)
+ball2 = sprite.add_sprite("spring", 200, 400)
+balls.append(ball2)
+
 
 @wrap_py.always(50)
 def beskonechnoe_dvijenie_karika():
     global scorost
-    sprite.move_sprite_by(ball, 0, scorost)
-    scorost += 1
-    niz = sprite.get_bottom(ball)
-    if niz >= 600:
-        sprite.set_bottom_to(ball, 600)
-        scorost = - scorost * 0.8
+    for ball in balls:
+        sprite.move_sprite_by(ball, 0, scorost)
+        scorost += 1
+        niz = sprite.get_bottom(ball)
+        if niz >= 600:
+            sprite.set_bottom_to(ball, 600)
+            scorost = - scorost * 0.8
 
 
 @wrap_py.on_mouse_move
@@ -32,17 +40,17 @@ def mouse_move(pos):
     if left <= 0:
         sprite.set_left_to(pushka_UwU, 0)
     if right >= 600:
-        sprite.set_right_to(pushka_UwU,600)
+        sprite.set_right_to(pushka_UwU, 600)
 
 
 @wrap_py.on_mouse_down()
 def shooting():
     global bullet
-    y=sprite.get_top(pushka_UwU)
-    x=sprite.get_sprite_x(pushka_UwU)
-    bullet=sprite.add_sprite("bullet",x,y)
+    y = sprite.get_top(pushka_UwU)
+    x = sprite.get_sprite_x(pushka_UwU)
+    bullet = sprite.add_sprite("bullet", x, y)
     bullets.append(bullet)
-    sprite.set_bottom_to(bullet,y)
+    sprite.set_bottom_to(bullet, y)
 
 
 @wrap_py.always
@@ -51,5 +59,5 @@ def flight():
     #     x,y=sprite.get_sprite_pos(bullet)
     #     sprite.move_sprite_to(bullet,x,y-5)
     for bullet in bullets:
-        x,y=sprite.get_sprite_pos(bullet)
-        sprite.move_sprite_to(bullet,x,y-20)
+        x, y = sprite.get_sprite_pos(bullet)
+        sprite.move_sprite_to(bullet, x, y - 20)
