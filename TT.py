@@ -12,23 +12,23 @@ scorost = 0
 bullet = None
 bullets = []
 balls = []
-d = {"number": ball, "scorost": 0}
-
+d = {"number": ball, "scorost": 0,"scorostx":5}
 balls.append(d)
 ball2 = sprite.add_sprite("spring", 200, 400)
-balls.append(ball2)
+b = {"number": ball2, "scorost": 0,"scorostx":-8}
+balls.append(b)
 
 
 @wrap_py.always(50)
 def beskonechnoe_dvijenie_karika():
     global scorost
     for ball in balls:
-        sprite.move_sprite_by(ball, 0, scorost)
-        scorost += 1
-        niz = sprite.get_bottom(ball)
+        sprite.move_sprite_by(ball["number"], ball["scorostx"], ball["scorost"])
+        ball["scorost"] += 1
+        niz = sprite.get_bottom(ball["number"])
         if niz >= 600:
-            sprite.set_bottom_to(ball, 600)
-            scorost = - scorost * 0.8
+            sprite.set_bottom_to(ball["number"], 600)
+            ball["scorost"] = - ball["scorost"] * 0.8
 
 
 @wrap_py.on_mouse_move
