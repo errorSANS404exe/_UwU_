@@ -7,16 +7,16 @@ world.set_world_background_color_rgb(180, 45, 255)
 pushka_UwU = sprite.add_sprite("X_X_pushka", 80, 600)
 sprite.set_bottom_to(pushka_UwU, 600)
 sprite.set_left_to(pushka_UwU, 0)
-ball = sprite.add_sprite("spring", 100, 100)
+ball = sprite.add_sprite("spring", 300,600)
 scorost = 0
 bullet = None
 bullets = []
 balls = []
-d = {"number": ball, "scorost": 0,"scorostx":5}
+d = {"number": ball, "scorost": 0, "scorostx": 5}
 balls.append(d)
-ball2 = sprite.add_sprite("spring", 200, 400)
-b = {"number": ball2, "scorost": 0,"scorostx":-8}
-balls.append(b)
+#ball2 = sprite.add_sprite("spring", 200, 400)
+#b = {"number": ball2, "scorost": 0, "scorostx": -8}
+#balls.append(b)
 
 
 @wrap_py.always(50)
@@ -25,10 +25,22 @@ def beskonechnoe_dvijenie_karika():
     for ball in balls:
         sprite.move_sprite_by(ball["number"], ball["scorostx"], ball["scorost"])
         ball["scorost"] += 1
+
+        # отбивка от низа
         niz = sprite.get_bottom(ball["number"])
         if niz >= 600:
             sprite.set_bottom_to(ball["number"], 600)
-            ball["scorost"] = - ball["scorost"] * 0.8
+            ball["scorost"] = - ball["scorost"] * 0.9
+        # отбивка от правой границы
+        right = sprite.get_right(ball["number"])
+        if right >= 600:
+            sprite.set_right_to(ball["number"], 600)
+            ball["scorostx"] = - ball["scorostx"]
+
+        left = sprite.get_left(ball["number"])
+        if left <= 0:
+            sprite.set_left_to(ball["number"], 0)
+            ball["scorostx"] = -ball["scorostx"]
 
 
 @wrap_py.on_mouse_move
